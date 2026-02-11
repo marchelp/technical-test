@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\ExpensesController;
 use App\Http\Controllers\Api\UserPocketController;
 use App\Http\Controllers\Api\IncomesController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
