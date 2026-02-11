@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Traits\ApiResponse;
+use Illuminate\Support\Facades\Auth;
+
+class AuthController extends Controller
+{
+    use ApiResponse;
+
+    public function login(LoginRequest $request) {
+        $credentials = $request->only('email', 'password');
+
+        if (! $token = auth()->guard('api')->attempt($credentials)) {
+            return $this->errorResponse('Email atau Password salah.', 401);
+        }
+
+        return $this->successResponse('Berhasil login.', [
+            'token' => $token
+        ]);
+    }
+
+    public function profile() {
+        $user = auth()->guard('api')->user();
+
+        return $this->successResponse('Berhasil login.', [
+            'full_name' => $user->full_name,
+            'email' => $user->email,
+        ]);
+    }
+
+    public function logout() {
+        auth()->guard('api')->logout();
+        return $this->successResponse('Berhasil logout.');
+    }
+}
