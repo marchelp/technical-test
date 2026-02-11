@@ -43,4 +43,15 @@ class UserPocketController extends Controller
             200
         );
     }
+
+    public function totalBalance() {
+        $total = UserPocket::where('user_id', Auth::id())->sum('balance');
+
+        return $this->successResponse(
+            'Berhasil mendapatkan total balance.',
+            [
+                'total' => (int) $total
+            ]
+        );
+    }
 }

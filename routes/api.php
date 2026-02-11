@@ -18,6 +18,8 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('pockets')->group(function () {
         Route::post('/', [UserPocketController::class, 'store']);
         Route::get('/', [UserPocketController::class, 'index']);
+
+        Route::get('total-balance', [UserPocketController::class, 'totalBalance']);
     });
 
     Route::prefix('incomes')->group(function () {
