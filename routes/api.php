@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\UserPocketController;
+use App\Http\Controllers\Api\IncomesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -17,4 +18,9 @@ Route::prefix('auth')->group(function () {
 Route::prefix('pockets')->middleware('auth:api')->group(function () {
     Route::post('/', [UserPocketController::class, 'store']);
     Route::get('/', [UserPocketController::class, 'index']);
+});
+
+
+Route::prefix('incomes')->middleware('auth:api')->group(function () {
+    Route::post('/', [IncomesController::class, 'store']);
 });
