@@ -1,59 +1,176 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Mid Software Engineer - Technical Test
+**Marchel Adias Pradana - marchel.adias@gmail.com** </br>
+Repository ini merupakan hasil pengerjaan Technical Test untuk posisi Mid Software Engineer. API untuk manajemen keuangan sederhana (Pocket, Income, Expense, dan Report) yang dibangun menggunakan Laravel dan PostgreSQL.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Tech Stack
+* Language: PHP 8.3
+* Framework: Laravel 12
+* Database: PostgreSQL
+* Authentication: JWT (JSON Web Token)
 
-## About Laravel
+[ERD Schema](https://dbdiagram.io/d/Mid-Software-Engineer-6971aabdbd82f5fce23bde24)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## User Seeder
+```
+php artisan db:seed --class=UserSeeder
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## API Specification
+1. User login
+   - Login will implement JWT for authentication
+   - POST → `api/auth/login`
+   - Request
+     ```
+     {
+      "email": "example@mail.net",
+      "password": "password"
+     }
+     ```
+   - Response
+     ```
+     {
+      "status": 200,
+      "error": false,
+      "message": "Berhasil login.",
+      "data": [
+        "token": "jwt_token"
+      ]
+     }
+     ```
+2. Get user profile
+   - GET → `api/auth/profile`
+   - Response
+     ```
+     {
+      "status": 200,
+      "error": false,
+      "message": "Berhasil login.",
+      "data": [
+        "full_name": "User 1",
+        "email": "example@mail.net",
+      ]
+     }
+     ```
+3. Add new pocket
+   - POST → `api/pockets`
+   - Request
+     ```
+     {
+      "name": "Pocket 1",
+      "initial_balance": 2000000
+     }
+     ```
+   - Response
+     ```
+     {
+      "status": 200,
+      "error": false,
+      "message": "Berhasil membuat pocket baru.",
+      "data": {
+        "id": "pocket_id"
+      }
+     }
+     ```
+4. List pocket
+   - GET → `api/pockets`
+   - Response
+     ```
+     {
+      "status": 200,
+      "error": false,
+      "message": "Berhasil.",
+      "data": [
+        {
+          "id": "pocket_id"
+          "name": "Pocket 1",
+          "current_balance": 2000000
+        },
+        ...
+      ]
+     }
+     ```
+5. Create income
+   - POST → `api/incomes`
+   - when create new income, it will add to pocket balance
+   - Request
+     ```
+     {
+      "pocket_id": "uuid",
+      "amount": 300000,
+      "notes": "Menemukan uang di jalan"
+     }
+     ```
+   - Response
+     ```
+     {
+      "status": 200,
+      "error": false,
+      "message": "Berhasil menambahkan income.",
+      "data": {
+        "id": "income_id",
+        "pocket_id": "pocket_id",
+        "current_balance": 2300000
+      }
+     }
+     ```
+6. Create expense
+   - POST → `api/expenses`
+   - when create new expense, it will sub to pocket balance
+   - Request
+     ```
+     {
+      "pocket_id": "uuid",
+      "amount": 2000000,
+      "notes": "Ganti lecet mobil orang"
+     }
+     ```
+   - Response
+     ```
+     {
+      "status": 200,
+      "error": false,
+      "message": "Berhasil menambahkan expense.",
+      "data": {
+        "id": "expense_id",
+        "pocket_id": "pocket_id",
+        "current_balance": 300000
+      }
+     }
+     ```
+7. Get total balances
+   - GET → `api/pockets/total-balance`
+   - Response
+     ```
+     {
+      "status": 200,
+      "error": false,
+      "message": "Berhasil mendapatkan total balance.",
+      "data": {
+        "total": 300000
+      }
+     }
+     ```
+8. Create report by pocket id
+   - POST → `api/pockets/:id/create-report`
+   - When create a report, it will running as job process
+   - Request
+     ```
+     {
+      "type": "INCOME", //INCOME,EXPENSE,
+      "date": "2026-01-01", //YYYY-MM-DD
+     }
+     ```
+   - Respones
+     ```
+     {
+      "status": 200,
+      "error": false,
+      "message": "Report sedang dibuat. Silahkan check berkala pada link berikut.",
+      "data": {
+        "link": "http://localhost:8000/reports/<uuid>-<timestamp>"
+      }
+     }
+     ```
+9. Create endpoint for stream report excel
+   - GET → `reports/:id`
+   - Description → When hit endpoint, it will stream an `<id>.xlsx` file inside local storage and download it
