@@ -10,6 +10,7 @@ class AuthController extends Controller
 {
     use ApiResponse;
 
+    // User login with JWT token
     public function login(LoginRequest $request) {
         $credentials = $request->only('email', 'password');
 
@@ -22,6 +23,7 @@ class AuthController extends Controller
         ]);
     }
 
+    // Get user profile
     public function profile() {
         $user = auth()->guard('api')->user();
 
@@ -31,6 +33,7 @@ class AuthController extends Controller
         ]);
     }
 
+    // User logout
     public function logout() {
         auth()->guard('api')->logout();
         return $this->successResponse('Berhasil logout.');

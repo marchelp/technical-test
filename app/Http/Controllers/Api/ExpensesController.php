@@ -14,6 +14,7 @@ class ExpensesController extends Controller
 {
     use ApiResponse;
 
+    // Create expenses to reduce into user pocket balance
     public function store(Request $request) {
         $request->validate([
             'pocket_id' => 'required|exists:user_pockets,id',

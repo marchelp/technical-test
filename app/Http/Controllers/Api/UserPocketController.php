@@ -46,6 +46,7 @@ class UserPocketController extends Controller
         );
     }
 
+    // Get total balance from pocket
     public function totalBalance() {
         $total = UserPocket::where('user_id', Auth::id())->sum('balance');
 
@@ -57,6 +58,7 @@ class UserPocketController extends Controller
         );
     }
 
+    // Create report for incomes and expenses from user pocket
     public function createReport(Request $request, $id)
     {
         $request->validate([

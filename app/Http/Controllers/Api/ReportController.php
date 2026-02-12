@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
 {
+    // Get report incomes / expenses pocket file to download
     public function show($id)
     {
         $filePath = 'reports/' . $id . '.xlsx';

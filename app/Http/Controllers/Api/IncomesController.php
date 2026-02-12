@@ -14,6 +14,7 @@ class IncomesController extends Controller
 {
     use ApiResponse;
 
+    // Create incomes to added into user pocket balance
     public function store(Request $request) {
         $request->validate([
             'pocket_id' => 'required|exists:user_pockets,id',
