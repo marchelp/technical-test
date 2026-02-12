@@ -20,6 +20,8 @@ Repository ini merupakan hasil pengerjaan Technical Test untuk posisi Mid Softwa
   DB_DATABASE=your_db_name
   DB_USERNAME=your_db_username
   DB_PASSWORD=your_db_password
+
+  CACHE_STORE=database // Untuk mendapatkan update export excel tanpa queu:work
   ```
 * Generate APP Key & JWT Secret
   ```
