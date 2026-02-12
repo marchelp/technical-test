@@ -10,10 +10,27 @@ Repository ini merupakan hasil pengerjaan Technical Test untuk posisi Mid Softwa
 
 [ERD Schema](https://dbdiagram.io/d/Mid-Software-Engineer-6971aabdbd82f5fce23bde24)
 
-## User Seeder
-```
-php artisan db:seed --class=UserSeeder
-```
+## Installation
+* `composer install`
+* Copy file `.env.example` gunakan pada `.env`
+  ```
+  DB_CONNECTION=pgsql
+  DB_HOST=127.0.0.1
+  DB_PORT=5432
+  DB_DATABASE=your_db_name
+  DB_USERNAME=your_db_username
+  DB_PASSWORD=your_db_password
+  ```
+* Generate APP Key & JWT Secret
+  ```
+  php artisan key:generate
+  php artisan jwt:secret
+  ```
+
+### User Seeder
+  ```
+  php artisan db:seed --class=UserSeeder
+  ```
 
 ## API Specification
 1. User login
